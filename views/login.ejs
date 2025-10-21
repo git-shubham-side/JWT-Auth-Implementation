@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <main class="login-container">
+      <h1>Login</h1>
+      <form action="/login" method="post" class="login-form">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        />
+
+        <label for="pass">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="pass"
+          placeholder="Enter your password"
+          required
+        />
+
+        <button type="submit">Login</button>
+        <p>
+          Don't have an account?
+          <a href="/signup" style="text-decoration: none; color: white"
+            >Signup</a
+          >
+        </p>
+      </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const form = document.querySelector(".login-form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Stop page reload
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("pass").value;
+
+        // Send login request to backend
+        const response = await fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        // Handle response status
+        if (response.status === 200) {
+          Swal.fire({
+            title: "Login Successful!",
+            text: "Welcome back",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => {
+            window.location.href = "/dashboard";
+          });
+        } else if (response.status === 400) {
+          Swal.fire("Invalid Email!", "Use @gmail.com only.", "warning");
+        } else if (response.status === 401) {
+          Swal.fire("Incorrect Password!", "Try again.", "error");
+        } else if (response.status === 404) {
+          Swal.fire("User Not Found!", "Please sign up first.", "info");
+        } else {
+          Swal.fire("Server Error!", "Something went wrong.", "error");
+        }
+      });
+    </script>
+  </body>
+</html>
