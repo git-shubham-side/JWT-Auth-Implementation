@@ -1,66 +1,100 @@
 # JWT Auth Implementation
 
-A clean and beginner-friendly **JWT Authentication** project built with **Node.js**, **Express.js**, **MongoDB**, and **EJS**.  
-This application demonstrates how to implement **user signup, login, protected routes, logout**, **password hashing with bcrypt**, and **JWT-based authentication using cookies**.
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![EJS](https://img.shields.io/badge/EJS-B4CA65?style=for-the-badge&logo=ejs&logoColor=black)](https://ejs.co/)
+[![JWT](https://img.shields.io/badge/JWT-Authentication-black?style=for-the-badge&logo=jsonwebtokens)]
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=for-the-badge)](LICENSE)
+
+---
 
 ## Overview
 
-This project is a simple authentication system where users can:
+This project is a complete authentication system built using Node.js, Express.js, MongoDB, and JSON Web Tokens.  
+It demonstrates secure user authentication with signup, login, protected routes, and cookie-based session handling.
 
-- Create an account
-- Log in securely
-- Access a protected dashboard
-- Log out by clearing the authentication token
-
-It is designed as a practical starter project for learning authentication fundamentals in Node.js.
+---
 
 ## Features
 
-- User registration with hashed passwords
+- User registration with secure password hashing (bcrypt)
 - User login with JWT token generation
-- Token stored in **HTTP-only cookies**
-- Protected dashboard route using custom middleware
-- Logout functionality
-- Server-side rendering with **EJS**
-- MongoDB integration with **Mongoose**
+- Token stored in HTTP-only cookies
+- Protected routes using authentication middleware
+- Logout functionality by clearing authentication cookies
+- Server-side rendering using EJS
+- MongoDB integration using Mongoose
+
+---
 
 ## Tech Stack
 
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB, Mongoose
-- **Authentication:** JWT, bcrypt
-- **Templating Engine:** EJS
-- **Other Tools:** cookie-parser, dotenv, nodemon
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Tokens (JWT)
+- bcrypt
+- EJS
+- cookie-parser
+- dotenv
+
+---
 
 ## Project Structure
 
-```bash
+
 JWT-Auth-Implementation/
 │
 ├── controllers/
-│   ├── login_controller.js
-│   └── signup_controller.js
+│ ├── login_controller.js
+│ └── signup_controller.js
 │
 ├── middlewares/
-│   └── middleware
+│ └── middleware
 │
 ├── models/
-│   └── user.js
-│
-├── public/
+│ └── user.js
 │
 ├── routes/
-│   ├── login.js
-│   └── signup.js
+│ ├── login.js
+│ └── signup.js
 │
 ├── views/
-│   ├── dashboard.ejs
-│   ├── index.ejs
-│   ├── login.ejs
-│   └── signup.ejs
+│ ├── index.ejs
+│ ├── login.ejs
+│ ├── signup.ejs
+│ └── dashboard.ejs
 │
+├── public/
 ├── app.js
 ├── package.json
-├── package-lock.json
-├── .gitignore
 └── README.md
+
+
+---
+
+## Authentication Flow
+
+### Registration
+User submits email and password → password is hashed → stored in MongoDB
+
+### Login
+User credentials verified → JWT token generated → stored in cookie
+
+### Protected Routes
+Middleware checks token → verifies → allows or denies access
+
+### Logout
+Authentication cookie is cleared
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/git-shubham-side/JWT-Auth-Implementation.git
+cd JWT-Auth-Implementation
