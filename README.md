@@ -45,33 +45,39 @@ It demonstrates secure user authentication with signup, login, protected routes,
 ## Project Structure
 
 
+## Project Structure
+
+```bash
 JWT-Auth-Implementation/
 │
 ├── controllers/
-│ ├── login_controller.js
-│ └── signup_controller.js
+│   ├── login_controller.js
+│   └── signup_controller.js
 │
 ├── middlewares/
-│ └── middleware
+│   └── middleware
 │
 ├── models/
-│ └── user.js
-│
-├── routes/
-│ ├── login.js
-│ └── signup.js
-│
-├── views/
-│ ├── index.ejs
-│ ├── login.ejs
-│ ├── signup.ejs
-│ └── dashboard.ejs
+│   └── user.js
 │
 ├── public/
+│
+├── routes/
+│   ├── login.js
+│   └── signup.js
+│
+├── views/
+│   ├── dashboard.ejs
+│   ├── index.ejs
+│   ├── login.ejs
+│   └── signup.ejs
+│
 ├── app.js
 ├── package.json
+├── package-lock.json
+├── .gitignore
 └── README.md
-
+```
 
 ---
 
