@@ -104,3 +104,5 @@ Authentication cookie is cleared
 ```bash
 git clone https://github.com/git-shubham-side/JWT-Auth-Implementation.git
 cd JWT-Auth-Implementation
+npm install
+npm start
