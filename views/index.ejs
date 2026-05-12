@@ -3,16 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
+    <title>Authentication - By Shubham Rathod</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/index.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
+
   <body>
-    <div class="container">
-      <h1>Welcome to Authentication Example</h1>
-      <div class="buttons">
-        <a href="/signup" class="btn signup-btn">Signup</a>
-        <a href="/login" class="btn login-btn">Login</a>
-      </div>
-    </div>
+    <!-- Background Blur -->
+    <div class="bg-blur blur-1"></div>
+    <div class="bg-blur blur-2"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+      <i data-lucide="moon"></i>
+    </button>
+
+    <main class="container">
+      <section class="card">
+        <div class="badge">
+          <i data-lucide="sparkles"></i>
+          Secure Authentication using JWT & Bcrypt
+        </div>
+
+        <h1>
+          Welcome to your
+          <span>Authentication App</span>
+        </h1>
+
+        <p>Created by - Shubham Rathod</p>
+
+        <div class="features">
+          <div class="feature-box">
+            <i data-lucide="shield-check"></i>
+            <span>Secure</span>
+          </div>
+
+          <div class="feature-box">
+            <i data-lucide="zap"></i>
+            <span>Fast</span>
+          </div>
+
+          <div class="feature-box">
+            <i data-lucide="smartphone"></i>
+            <span>Responsive</span>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <a href="/signup" class="btn signup-btn">
+            <i data-lucide="user-plus"></i>
+            Signup
+          </a>
+
+          <a href="/login" class="btn login-btn">
+            <i data-lucide="log-in"></i>
+            Login
+          </a>
+        </div>
+      </section>
+    </main>
+    <script>
+      lucide.createIcons();
+
+      const themeToggle = document.getElementById("themeToggle");
+      const body = document.body;
+
+      // Default Theme = Light
+      body.classList.add("light-mode");
+
+      // Load Saved Theme
+      const savedTheme = localStorage.getItem("theme");
+
+      if (savedTheme === "dark") {
+        body.classList.remove("light-mode");
+      }
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("light-mode");
+
+        if (body.classList.contains("light-mode")) {
+          localStorage.setItem("theme", "light");
+        } else {
+          localStorage.setItem("theme", "dark");
+        }
+      });
+    </script>
   </body>
 </html>
