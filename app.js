@@ -1,9 +1,6 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-
-const { hash } = require("crypto");
-const { json } = require("stream/consumers");
 require("dotenv").config();
 const authUser = require("./middlewares/middleware");
 const cookieParser = require("cookie-parser");
@@ -51,5 +48,7 @@ app.get("/dashboard", authUser, (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("server started");
+  console.log(
+    `Server started on  http://localhost:${process.env.PORT || 3000}`,
+  );
 });
