@@ -3,165 +3,795 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> Signup</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>" />
+    <title>Sign Up — SecureAuth</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%237c3aed%22/><text y=%22.85em%22 font-size=%2265%22 x=%2250%25%22 text-anchor=%22middle%22>🔐</text></svg>"
+    />
 
-    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/style.css" />
 
-    <!-- SweetAlert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --font: "Plus Jakarta Sans", sans-serif;
+        --bg: #f4f2ff;
+        --card-bg: #ffffff;
+        --card-border: rgba(124, 58, 237, 0.13);
+        --input-bg: #faf9ff;
+        --input-border: #e5e0f9;
+        --input-focus: #7c3aed;
+        --text-primary: #1a1033;
+        --text-secondary: #6b7280;
+        --text-hint: #b0a8cc;
+        --label: #4b4665;
+        --divider: #ede9fe;
+        --icon-color: #9d8ec4;
+        --card-shadow:
+          0 8px 48px rgba(124, 58, 237, 0.11),
+          0 2px 8px rgba(124, 58, 237, 0.07);
+        --btn-shadow: 0 4px 22px rgba(124, 58, 237, 0.38);
+        --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      body.dark {
+        --bg: #09060f;
+        --card-bg: #120d24;
+        --card-border: rgba(167, 139, 250, 0.14);
+        --input-bg: #1a1235;
+        --input-border: #2a1d52;
+        --input-focus: #a78bfa;
+        --text-primary: #ede9ff;
+        --text-secondary: #9d93bb;
+        --text-hint: #5c5280;
+        --label: #c0b6e8;
+        --divider: #1e1540;
+        --icon-color: #7b6ea8;
+        --card-shadow:
+          0 8px 48px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(124, 58, 237, 0.18);
+        --btn-shadow: 0 4px 24px rgba(124, 58, 237, 0.5);
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text-primary);
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        overflow: hidden;
+        position: relative;
+        transition:
+          background 0.4s var(--ease),
+          color 0.3s var(--ease);
+      }
+
+      .blob {
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        transition: opacity 0.5s;
+      }
+      .blob-1 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(124, 58, 237, 0.25) 0%,
+          transparent 65%
+        );
+        top: -160px;
+        left: -140px;
+      }
+      .blob-2 {
+        width: 360px;
+        height: 360px;
+        background: radial-gradient(
+          circle,
+          rgba(167, 139, 250, 0.2) 0%,
+          transparent 65%
+        );
+        bottom: -100px;
+        right: -100px;
+      }
+      .blob-3 {
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(
+          circle,
+          rgba(196, 181, 253, 0.15) 0%,
+          transparent 65%
+        );
+        top: 50%;
+        left: 60%;
+      }
+      body.dark .blob-1 {
+        background: radial-gradient(
+          circle,
+          rgba(109, 40, 217, 0.32) 0%,
+          transparent 65%
+        );
+      }
+      body.dark .blob-2 {
+        background: radial-gradient(
+          circle,
+          rgba(139, 92, 246, 0.18) 0%,
+          transparent 65%
+        );
+      }
+
+      .theme-btn {
+        position: fixed;
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid var(--card-border);
+        background: var(--card-bg);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        transition:
+          background 0.35s var(--ease),
+          border-color 0.3s,
+          color 0.2s,
+          transform 0.2s;
+      }
+      .theme-btn:hover {
+        color: #7c3aed;
+        transform: rotate(20deg) scale(1.08);
+        border-color: rgba(124, 58, 237, 0.4);
+      }
+      body.dark .theme-btn:hover {
+        color: #a78bfa;
+        border-color: rgba(167, 139, 250, 0.4);
+      }
+
+      .card {
+        position: relative;
+        z-index: 10;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 2.75rem 2.25rem 2.25rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: var(--card-shadow);
+        transition:
+          background 0.4s var(--ease),
+          border-color 0.3s,
+          box-shadow 0.4s;
+        animation: cardIn 0.5s var(--ease) both;
+      }
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(22px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .logo-wrap {
+        width: 54px;
+        height: 54px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #7c3aed, #a78bfa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 18px rgba(124, 58, 237, 0.38);
+      }
+      .logo-wrap svg {
+        color: #fff;
+      }
+
+      .card h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        margin-bottom: 0.3rem;
+        transition: color 0.3s;
+      }
+      .subtitle {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        transition: color 0.3s;
+      }
+
+      .field {
+        margin-bottom: 1.1rem;
+      }
+      .field label {
+        display: block;
+        font-size: 0.775rem;
+        font-weight: 600;
+        color: var(--label);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 0.45rem;
+        transition: color 0.3s;
+      }
+
+      .input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 13px;
+        color: var(--icon-color);
+        display: flex;
+        pointer-events: none;
+        transition: color 0.2s;
+      }
+      .input-wrap:focus-within .input-icon {
+        color: var(--input-focus);
+      }
+
+      .input-wrap input {
+        width: 100%;
+        padding: 11px 42px 11px 40px;
+        background: var(--input-bg);
+        border: 1.5px solid var(--input-border);
+        border-radius: 12px;
+        font-family: var(--font);
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        outline: none;
+        transition:
+          border-color 0.2s var(--ease),
+          background 0.2s,
+          box-shadow 0.2s;
+      }
+      .input-wrap input::placeholder {
+        color: var(--text-hint);
+      }
+      .input-wrap input:focus {
+        border-color: var(--input-focus);
+        background: var(--card-bg);
+        box-shadow: 0 0 0 3.5px rgba(124, 58, 237, 0.12);
+      }
+      body.dark .input-wrap input:focus {
+        box-shadow: 0 0 0 3.5px rgba(167, 139, 250, 0.14);
+      }
+
+      /* Strength bar */
+      .strength-wrap {
+        margin-top: 8px;
+        display: none;
+      }
+      .strength-wrap.visible {
+        display: block;
+      }
+      .strength-bars {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 4px;
+      }
+      .strength-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: 99px;
+        background: var(--divider);
+        transition: background 0.3s;
+      }
+      .strength-bar.weak {
+        background: #ef4444;
+      }
+      .strength-bar.fair {
+        background: #f97316;
+      }
+      .strength-bar.good {
+        background: #eab308;
+      }
+      .strength-bar.strong {
+        background: #22c55e;
+      }
+      .strength-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-hint);
+        letter-spacing: 0.04em;
+        transition: color 0.3s;
+      }
+      .strength-label.weak {
+        color: #ef4444;
+      }
+      .strength-label.fair {
+        color: #f97316;
+      }
+      .strength-label.good {
+        color: #eab308;
+      }
+      .strength-label.strong {
+        color: #22c55e;
+      }
+
+      .eye-btn {
+        position: absolute;
+        right: 13px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--icon-color);
+        display: flex;
+        padding: 0;
+        transition: color 0.2s;
+      }
+      .eye-btn:hover {
+        color: #7c3aed;
+      }
+      body.dark .eye-btn:hover {
+        color: #a78bfa;
+      }
+
+      .signup-btn {
+        width: 100%;
+        padding: 13px;
+        background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+        border: none;
+        border-radius: 12px;
+        font-family: var(--font);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 0.5rem;
+        box-shadow: var(--btn-shadow);
+        transition:
+          transform 0.15s,
+          box-shadow 0.2s,
+          filter 0.2s;
+        letter-spacing: 0.01em;
+      }
+      .signup-btn:hover:not(:disabled) {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 28px rgba(124, 58, 237, 0.45);
+      }
+      .signup-btn:active:not(:disabled) {
+        transform: scale(0.98) translateY(0);
+      }
+      .signup-btn:disabled {
+        opacity: 0.72;
+        cursor: not-allowed;
+      }
+
+      .spinner {
+        width: 17px;
+        height: 17px;
+        border: 2.5px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+        flex-shrink: 0;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 1.5rem 0 1.25rem;
+        color: var(--text-hint);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--divider);
+        transition: background 0.3s;
+      }
+
+      .bottom-text {
+        text-align: center;
+        font-size: 0.855rem;
+        color: var(--text-secondary);
+        transition: color 0.3s;
+      }
+      .bottom-text a {
+        color: #7c3aed;
+        font-weight: 600;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .bottom-text a:hover {
+        opacity: 0.72;
+      }
+      body.dark .bottom-text a {
+        color: #a78bfa;
+      }
+
+      body.dark .swal2-popup {
+        background: #1a1235 !important;
+        color: #ede9ff !important;
+        border: 1px solid rgba(167, 139, 250, 0.2) !important;
+        border-radius: 18px !important;
+      }
+      body.dark .swal2-title {
+        color: #ede9ff !important;
+      }
+      body.dark .swal2-html-container {
+        color: #9d93bb !important;
+      }
+      body.dark .swal2-confirm {
+        background: #7c3aed !important;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          padding: 2rem 1.4rem 1.75rem;
+          border-radius: 20px;
+        }
+        .card h1 {
+          font-size: 1.35rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <!-- Background -->
-    <div class="bg-blur blur-1"></div>
-    <div class="bg-blur blur-2"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark/light mode">
+      <i data-lucide="moon" width="18" height="18"></i>
+    </button>
 
-    <main class="signup-container">
-      <div class="signup-card">
-        <div class="logo">
-          ➕
-        </div>
-
-        <div class="title">
-          🎖️ <h1>Create Account</h1>
-        </div>
-
-        <p class="subtitle">Signup to start your secure journey</p>
-
-        <form class="signup-form">
-          <div class="input-group">
-            <label>Email</label>
-
-            <div class="input-box">
-              📧
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label>Password</label>
-
-            <div class="input-box">
-              🔐
-              <input
-                type="password"
-                id="pass"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-          </div>
-
-          <button type="submit" class="signup-btn">
-            ➕ Signup
-          </button>
-
-          <p class="bottom-text">
-            Already have an account?
-            <a href="/login">Login</a>
-          </p>
-        </form>
+    <main class="card" role="main">
+      <div class="logo-wrap" aria-hidden="true">
+        <i data-lucide="user-plus" width="26" height="26"></i>
       </div>
+
+      <h1>Create account</h1>
+      <p class="subtitle">Sign up to start your secure journey</p>
+
+      <!-- Email -->
+      <div class="field">
+        <label for="email">Email</label>
+        <div class="input-wrap">
+          <span class="input-icon" aria-hidden="true">
+            <i data-lucide="mail" width="17" height="17"></i>
+          </span>
+          <input
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            spellcheck="false"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <span class="input-icon" aria-hidden="true">
+            <i data-lucide="lock" width="17" height="17"></i>
+          </span>
+          <input
+            type="password"
+            id="password"
+            placeholder="Create a strong password"
+            autocomplete="new-password"
+            required
+          />
+          <button
+            class="eye-btn"
+            id="eyeBtn"
+            type="button"
+            aria-label="Toggle password visibility"
+          >
+            <i data-lucide="eye" width="17" height="17"></i>
+          </button>
+        </div>
+        <!-- Password strength -->
+        <div class="strength-wrap" id="strengthWrap">
+          <div class="strength-bars">
+            <div class="strength-bar" id="bar1"></div>
+            <div class="strength-bar" id="bar2"></div>
+            <div class="strength-bar" id="bar3"></div>
+            <div class="strength-bar" id="bar4"></div>
+          </div>
+          <span class="strength-label" id="strengthLabel"></span>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="field">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-wrap">
+          <span class="input-icon" aria-hidden="true">
+            <i data-lucide="shield-check" width="17" height="17"></i>
+          </span>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Repeat your password"
+            autocomplete="new-password"
+            required
+          />
+          <button
+            class="eye-btn"
+            id="eyeBtn2"
+            type="button"
+            aria-label="Toggle confirm password visibility"
+          >
+            <i data-lucide="eye" width="17" height="17"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="signup-btn" id="signupBtn" type="button">
+        <span class="spinner" id="spinner"></span>
+        <i data-lucide="user-plus" width="17" height="17" id="btnIcon"></i>
+        <span id="btnText">Create Account</span>
+      </button>
+
+      <div class="divider">or</div>
+
+      <p class="bottom-text">
+        Already have an account? <a href="/login">Login</a>
+      </p>
     </main>
 
     <script>
-      // Theme Toggle
-      const themeToggle = document.getElementById("themeToggle");
+      lucide.createIcons();
+
+      // ── Theme ──────────────────────────────────────────
       const body = document.body;
+      const themeBtn = document.getElementById("themeBtn");
 
-      // Default to light-mode
-      body.classList.add("light-mode");
-
-      const savedTheme = localStorage.getItem("theme");
-
-      if (savedTheme === "dark") {
-        body.classList.remove("light-mode");
-        themeToggle.textContent = "☀️";
-      } else {
-        themeToggle.textContent = "🌙";
+      function applyTheme(isDark) {
+        body.classList.toggle("dark", isDark);
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeBtn.innerHTML = isDark
+          ? '<i data-lucide="sun" width="18" height="18"></i>'
+          : '<i data-lucide="moon" width="18" height="18"></i>';
+        lucide.createIcons();
       }
 
-      themeToggle.addEventListener("click", () => {
-        body.classList.toggle("light-mode");
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        applyTheme(saved === "dark" || (!saved && prefersDark));
+      })();
 
-        if (body.classList.contains("light-mode")) {
-          localStorage.setItem("theme", "light");
-          themeToggle.textContent = "🌙";
-        } else {
-          localStorage.setItem("theme", "dark");
-          themeToggle.textContent = "☀️";
+      themeBtn.addEventListener("click", () =>
+        applyTheme(!body.classList.contains("dark")),
+      );
+
+      // ── Eye toggles ────────────────────────────────────
+      function makeEyeToggle(btnId, inputId) {
+        const btn = document.getElementById(btnId);
+        const input = document.getElementById(inputId);
+        let visible = false;
+        btn.addEventListener("click", () => {
+          visible = !visible;
+          input.type = visible ? "text" : "password";
+          btn.innerHTML = visible
+            ? '<i data-lucide="eye-off" width="17" height="17"></i>'
+            : '<i data-lucide="eye" width="17" height="17"></i>';
+          lucide.createIcons();
+        });
+      }
+      makeEyeToggle("eyeBtn", "password");
+      makeEyeToggle("eyeBtn2", "confirmPassword");
+
+      // ── Password strength ──────────────────────────────
+      const passInput = document.getElementById("password");
+      const strengthWrap = document.getElementById("strengthWrap");
+      const strengthLbl = document.getElementById("strengthLabel");
+      const bars = [1, 2, 3, 4].map((n) => document.getElementById("bar" + n));
+
+      const levels = [
+        { label: "Weak", cls: "weak", fill: 1 },
+        { label: "Fair", cls: "fair", fill: 2 },
+        { label: "Good", cls: "good", fill: 3 },
+        { label: "Strong", cls: "strong", fill: 4 },
+      ];
+
+      function getStrength(pwd) {
+        let score = 0;
+        if (pwd.length >= 8) score++;
+        if (/[A-Z]/.test(pwd)) score++;
+        if (/[0-9]/.test(pwd)) score++;
+        if (/[^A-Za-z0-9]/.test(pwd)) score++;
+        return score; // 0-4
+      }
+
+      passInput.addEventListener("input", () => {
+        const val = passInput.value;
+        if (!val) {
+          strengthWrap.classList.remove("visible");
+          return;
         }
+        strengthWrap.classList.add("visible");
+
+        const score = Math.max(1, getStrength(val));
+        const level = levels[score - 1];
+
+        bars.forEach((b, i) => {
+          b.className = "strength-bar";
+          if (i < level.fill) b.classList.add(level.cls);
+        });
+        strengthLbl.className = "strength-label " + level.cls;
+        strengthLbl.textContent = level.label;
       });
 
-      // Signup Logic
-      const form = document.querySelector(".signup-form");
+      // ── Helpers ────────────────────────────────────────
+      const signupBtn = document.getElementById("signupBtn");
+      const spinner = document.getElementById("spinner");
+      const btnIcon = document.getElementById("btnIcon");
+      const btnText = document.getElementById("btnText");
+      const emailIn = document.getElementById("email");
+      const confirmIn = document.getElementById("confirmPassword");
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      function setLoading(on) {
+        signupBtn.disabled = on;
+        spinner.style.display = on ? "block" : "none";
+        btnIcon.style.display = on ? "none" : "";
+        btnText.textContent = on ? "Creating account…" : "Create Account";
+      }
 
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("pass").value;
+      function isValidEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
 
+      function swalOpts(icon, title, text) {
+        return { icon, title, text, confirmButtonColor: "#7c3aed" };
+      }
+
+      // ── Signup handler ─────────────────────────────────
+      async function handleSignup() {
+        const email = emailIn.value.trim();
+        const password = passInput.value;
+        const confirm = confirmIn.value;
+
+        if (!email || !password || !confirm) {
+          return Swal.fire(
+            swalOpts("warning", "Fields empty", "Please fill in all fields."),
+          );
+        }
+        if (!isValidEmail(email)) {
+          return Swal.fire(
+            swalOpts(
+              "warning",
+              "Invalid email",
+              "Enter a valid email address.",
+            ),
+          );
+        }
+        if (password.length < 6) {
+          return Swal.fire(
+            swalOpts(
+              "warning",
+              "Weak password",
+              "Password must be at least 6 characters.",
+            ),
+          );
+        }
+        if (password !== confirm) {
+          return Swal.fire(
+            swalOpts(
+              "error",
+              "Passwords do not match",
+              "Make sure both passwords are the same.",
+            ),
+          );
+        }
+
+        setLoading(true);
         try {
-          const response = await fetch("/signup", {
+          const res = await fetch("/signup", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),
           });
 
-          if (response.status === 201 || response.status === 200) {
-            Swal.fire({
-              title: "Signup Successful",
-              text: "Account created successfully",
+          if (res.status === 201 || res.status === 200) {
+            await Swal.fire({
               icon: "success",
-              timer: 2000,
+              title: "Account created!",
+              text: "Redirecting to login…",
+              timer: 1800,
               showConfirmButton: false,
-            }).then(() => {
-              window.location.href = "/login";
             });
-          } else if (response.status === 400) {
-            Swal.fire("Invalid Email", "Use valid email format.", "warning");
-          } else if (response.status === 409) {
-            Swal.fire("Account Exists", "User already registered.", "info");
+            window.location.href = "/login";
+          } else if (res.status === 400) {
+            Swal.fire(
+              swalOpts("warning", "Invalid email", "Use a valid email format."),
+            );
+          } else if (res.status === 409) {
+            Swal.fire(
+              swalOpts(
+                "info",
+                "Account exists",
+                "An account with this email already exists. Please login.",
+              ),
+            );
           } else {
-            Swal.fire("Server Error", "Something went wrong.", "error");
+            Swal.fire(
+              swalOpts(
+                "error",
+                "Server Error",
+                "Something went wrong. Please try again later.",
+              ),
+            );
           }
-        } catch (error) {
+        } catch (_) {
           Swal.fire(
-            "Network Error",
-            "Check your internet connection.",
-            "error",
+            swalOpts(
+              "error",
+              "Network Error",
+              "Check your internet connection and try again.",
+            ),
           );
+        } finally {
+          setLoading(false);
         }
-      });
-    </script>
-  </body>
-</html>
-        } catch (error) {
-          Swal.fire(
-            "Network Error",
-            "Check your internet connection.",
-            "error",
-          );
-        }
+      }
+
+      signupBtn.addEventListener("click", handleSignup);
+      [emailIn, passInput, confirmIn].forEach((el) => {
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") handleSignup();
+        });
       });
     </script>
   </body>
