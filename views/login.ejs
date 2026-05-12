@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Modern Login</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>"
+    />
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,265 +16,10 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="/style.css" />
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --bg: #f4f7ff;
-        --card: rgba(255, 255, 255, 0.9);
-        --text: #111827;
-        --subtext: #6b7280;
-        --primary: #6366f1;
-        --secondary: #8b5cf6;
-        --border: rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-mode {
-        --bg: #0f172a;
-        --card: rgba(255, 255, 255, 0.08);
-        --text: #ffffff;
-        --subtext: #cbd5e1;
-        --border: rgba(255, 255, 255, 0.12);
-      }
-
-      body {
-        font-family: "Poppins", sans-serif;
-        min-height: 100vh;
-        background: var(--bg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        transition: 0.4s ease;
-        position: relative;
-        color: var(--text);
-      }
-
-      .bg-blur {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        z-index: 0;
-      }
-
-      .blur-1 {
-        width: 260px;
-        height: 260px;
-        background: #6366f1;
-        top: -80px;
-        left: -80px;
-      }
-
-      .blur-2 {
-        width: 300px;
-        height: 300px;
-        background: #8b5cf6;
-        bottom: -100px;
-        right: -100px;
-      }
-
-      .theme-toggle {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        border: none;
-        cursor: pointer;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--border);
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.3s ease;
-        z-index: 10;
-      }
-
-      .theme-toggle:hover {
-        transform: rotate(20deg) scale(1.08);
-      }
-
-      .login-container {
-        width: 100%;
-        max-width: 430px;
-        padding: 20px;
-        position: relative;
-        z-index: 2;
-      }
-
-      .login-card {
-        background: var(--card);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border);
-        border-radius: 30px;
-        padding: 40px 30px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        animation: fadeUp 1s ease;
-      }
-
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .logo {
-        width: 75px;
-        height: 75px;
-        margin: auto;
-        border-radius: 20px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
-      }
-
-      .logo svg {
-        width: 34px;
-        height: 34px;
-      }
-
-      .title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-
-      .title svg {
-        width: 32px;
-        height: 32px;
-        color: var(--primary);
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .subtitle {
-        text-align: center;
-        color: var(--subtext);
-        margin-bottom: 30px;
-        font-size: 0.95rem;
-      }
-
-      .input-group {
-        margin-bottom: 20px;
-      }
-
-      .input-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-        font-weight: 500;
-      }
-
-      .input-box {
-        position: relative;
-      }
-
-      .input-box svg {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-        color: #818cf8;
-      }
-
-      .input-box input {
-        width: 100%;
-        padding: 15px 15px 15px 50px;
-        border-radius: 15px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.08);
-        outline: none;
-        font-size: 1rem;
-        color: var(--text);
-        transition: 0.3s ease;
-      }
-
-      .input-box input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-      }
-
-      .login-btn {
-        width: 100%;
-        border: none;
-        padding: 15px;
-        border-radius: 15px;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: white;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .login-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
-      }
-
-      .bottom-text {
-        margin-top: 22px;
-        text-align: center;
-        color: var(--subtext);
-        font-size: 0.95rem;
-      }
-
-      .bottom-text a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      @media (max-width: 480px) {
-        .login-card {
-          padding: 35px 22px;
-        }
-
-        h1 {
-          font-size: 1.7rem;
-        }
-
-        .theme-toggle {
-          width: 48px;
-          height: 48px;
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -279,18 +28,14 @@
     <div class="bg-blur blur-2"></div>
 
     <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle">
-      <i data-lucide="moon"></i>
-    </button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
 
     <main class="login-container">
       <div class="login-card">
-        <div class="logo">
-          <i data-lucide="shield-check"></i>
-        </div>
+        <div class="logo">🛡️</div>
 
         <div class="title">
-          <i data-lucide="hand"></i>
+          👋
           <h1>Welcome Back</h1>
         </div>
 
@@ -301,8 +46,7 @@
             <label>Email</label>
 
             <div class="input-box">
-              <i data-lucide="mail"></i>
-
+              📧
               <input
                 type="email"
                 id="email"
@@ -316,8 +60,7 @@
             <label>Password</label>
 
             <div class="input-box">
-              <i data-lucide="lock"></i>
-
+              🔐
               <input
                 type="password"
                 id="pass"
@@ -327,10 +70,7 @@
             </div>
           </div>
 
-          <button type="submit" class="login-btn">
-            <i data-lucide="log-in"></i>
-            Login
-          </button>
+          <button type="submit" class="login-btn">🔓 Login</button>
 
           <p class="bottom-text">
             Don't have an account?
@@ -341,25 +81,31 @@
     </main>
 
     <script>
-      lucide.createIcons();
-
       // Theme Toggle
       const themeToggle = document.getElementById("themeToggle");
       const body = document.body;
 
+      // Default to light-mode for login
+      body.classList.add("light-mode");
+
       const savedTheme = localStorage.getItem("theme");
 
       if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
+        body.classList.remove("light-mode");
+        themeToggle.textContent = "☀️";
+      } else {
+        themeToggle.textContent = "🌙";
       }
 
       themeToggle.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
+        body.classList.toggle("light-mode");
 
-        if (body.classList.contains("dark-mode")) {
-          localStorage.setItem("theme", "dark");
-        } else {
+        if (body.classList.contains("light-mode")) {
           localStorage.setItem("theme", "light");
+          themeToggle.textContent = "🌙";
+        } else {
+          localStorage.setItem("theme", "dark");
+          themeToggle.textContent = "☀️";
         }
       });
 

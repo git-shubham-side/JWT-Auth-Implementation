@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Authentication - By Shubham Rathod</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>"
+    />
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,9 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/index.css" />
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="/style.css" />
   </head>
 
   <body>
@@ -23,16 +25,11 @@
     <div class="bg-blur blur-2"></div>
 
     <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle">
-      <i data-lucide="moon"></i>
-    </button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
 
     <main class="container">
       <section class="card">
-        <div class="badge">
-          <i data-lucide="sparkles"></i>
-          Secure Authentication using JWT & Bcrypt
-        </div>
+        <div class="badge">✨ Secure Authentication using JWT & Bcrypt</div>
 
         <h1>
           Welcome to your
@@ -42,38 +39,22 @@
         <p>Created by - Shubham Rathod</p>
 
         <div class="features">
-          <div class="feature-box">
-            <i data-lucide="shield-check"></i>
-            <span>Secure</span>
-          </div>
+          <div class="feature-box">🛡️ Secure</div>
 
-          <div class="feature-box">
-            <i data-lucide="zap"></i>
-            <span>Fast</span>
-          </div>
+          <div class="feature-box">⚡ Fast</div>
 
-          <div class="feature-box">
-            <i data-lucide="smartphone"></i>
-            <span>Responsive</span>
-          </div>
+          <div class="feature-box">📱 Responsive</div>
         </div>
 
         <div class="buttons">
-          <a href="/signup" class="btn signup-btn">
-            <i data-lucide="user-plus"></i>
-            Signup
-          </a>
+          <a href="/signup" class="btn signup-btn"> ➕ Signup </a>
 
-          <a href="/login" class="btn login-btn">
-            <i data-lucide="log-in"></i>
-            Login
-          </a>
+          <a href="/login" class="btn login-btn"> 🔓 Login </a>
         </div>
       </section>
     </main>
-    <script>
-      lucide.createIcons();
 
+    <script>
       const themeToggle = document.getElementById("themeToggle");
       const body = document.body;
 
@@ -85,6 +66,7 @@
 
       if (savedTheme === "dark") {
         body.classList.remove("light-mode");
+        themeToggle.textContent = "☀️";
       }
 
       themeToggle.addEventListener("click", () => {
@@ -92,8 +74,10 @@
 
         if (body.classList.contains("light-mode")) {
           localStorage.setItem("theme", "light");
+          themeToggle.textContent = "🌙";
         } else {
           localStorage.setItem("theme", "dark");
+          themeToggle.textContent = "☀️";
         }
       });
     </script>
