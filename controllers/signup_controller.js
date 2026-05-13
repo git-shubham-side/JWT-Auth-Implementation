@@ -33,7 +33,7 @@ let signup_post = async (req, res) => {
     email: email,
     password: hashedPassword,
   }).save();
-  res.status(200).redirect("/login");
+  res.status(201).json({ message: "Signup successful" });
 };
 
 module.exports = { signup_get, signup_post };
